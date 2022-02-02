@@ -1,11 +1,12 @@
 import './App.css';
+import Liste from './components/Liste';
+import Canva from './components/Canva';
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">      
-        Hello world!    
-      </h1>
+    <div className="App flex grow justify-around w-100">
+      <Canva />
+      <Liste />
     </div>
   );
 }
