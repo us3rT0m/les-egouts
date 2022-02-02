@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 
 const Canva = ({pictures = [], display = true}) => {
 
@@ -17,7 +17,7 @@ const Canva = ({pictures = [], display = true}) => {
 
             context.drawImage(picture.file, settings.x, settings.y, settings.width, settings.height);
         });
-    }, pictures);
+    }, [pictures]);
 
     return (
         <div className="flex flex-col w-4/5">
