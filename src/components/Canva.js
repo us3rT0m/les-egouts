@@ -1,6 +1,6 @@
 import React from 'react';
 
-const canva = (props) => {
+const Canva = (props) => {
     return (
         <div className="flex flex-col w-4/5">
             <h1>Canva</h1>
@@ -13,4 +13,4 @@ const canva = (props) => {
     )
 }
 
-export default canva
+export default Canva

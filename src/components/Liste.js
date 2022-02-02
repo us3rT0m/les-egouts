@@ -1,18 +1,52 @@
-import React from 'react'
+import React, { useState, useRef } from 'react';
 
-const liste = (props) => {
+
+const Liste = (props) => {
+
+    const [image, setImage] = useState({ preview: "", raw: "" });
+    const refInput = useRef();
+    const handleChange = e => {
+
+        if (e.target.files.length) {
+            setImage({
+                preview: URL.createObjectURL(e.target.files[0]),
+                raw: e.target.files[0]
+            });
+
+            props.onChangePic(image);
+        }
+    };
+
+    const handleUpload = e => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("image", image.raw);
+        refInput.current.click();
+    };
+
     return (
-        <div className="flex flex-col items-center w-100">
-
-        <button className="p-2 bg-green-500 text-white rounded">Upload pic</button>
+        <div>
         
-            <ul className="list-none flex flex-col justify-center items-center mt-5">
-                <li>Photo 1</li>
-                <li>Photo 2</li>
-                <li>Photo 3</li>
+        <input
+            type="file"
+            id="upload-button"
+            style={{ display: "none" }}
+            onChange={handleChange}
+            ref={refInput}
+        />
+        <br />
+        <button onClick={handleUpload}>Upload</button>
+
+        <div>
+            <ul>
+                <li>
+                    <img src={image.preview} alt="dummy" width="300" height="300" />
+                </li>
             </ul>
         </div>
-    )
+        </div>
+    );
 }
 
-export default liste
+
+export default Liste
