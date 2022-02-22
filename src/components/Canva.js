@@ -26,10 +26,9 @@ function getBase64(file) {
 
 const Canva = ({pictures = [], display = true}) => {
 
-    const canvas = document.getElementById("EgoutCanvas");
-
     //Liste des images
     useEffect(() => {
+        const canvas = document.getElementById("EgoutCanvas");
         const context = canvas.getContext("2d");
 
         //Clear du canvas a chaque reload
@@ -41,16 +40,7 @@ const Canva = ({pictures = [], display = true}) => {
         // copy.sort(function (p, pa) {
         //     return p.order >= pa.order;
         // });
-
-        /*
-        JSON FILE:
-        {
-          settings: {
-            x: 0, y: 0, width: 0, height: 0
-          },
-          file: <file state>
-        }
-         */
+  
 
         async function loadPictures(p) {
             for (const picture of copy) {
@@ -69,31 +59,6 @@ const Canva = ({pictures = [], display = true}) => {
             <h1>Canva</h1>
             <div className="border-2">
                 <canvas style={display?{display:'block'}:{display: 'none'}} id="EgoutCanvas" />
-            </div>
-
-            <div className="border-2 border-black w-72 mt-5">
-                <form action="">
-                    <div className="m-2" >
-                        <label> X : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Y : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Width : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Height : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Opacity : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                </form>
             </div>
         </div>
     )
