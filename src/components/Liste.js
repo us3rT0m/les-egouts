@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 const Liste = (props) => {
 
     const [image, setImage] = useState({preview:'',raw:''});
+    const [pictures, setPictures] = useState([]);
     const refInput = useRef();
 
     // useEffect(()=>{
@@ -27,6 +28,8 @@ const Liste = (props) => {
         const formData = new FormData();
         formData.append("image", image.raw);
         refInput.current.click();
+        setPictures([...pictures, image]);
+        console.log(pictures);
     };
 
     return (

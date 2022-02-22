@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 
 const Canva = ({pictures = [], display = true}) => {
 
@@ -26,6 +26,31 @@ const Canva = ({pictures = [], display = true}) => {
                 <canvas style={display?{display:'block'}:{display: 'none'}} id="EgoutCanvas">
                     
                 </canvas>
+            </div>
+
+            <div className="border-2 border-black w-72 mt-5">
+                <form action="">
+                    <div className="m-2" >
+                        <label> X : </label>
+                        <input type="number" className="w-100" />
+                    </div>
+                    <div className="m-2" >
+                        <label> Y : </label>
+                        <input type="number" className="w-100" />
+                    </div>
+                    <div className="m-2" >
+                        <label> Width : </label>
+                        <input type="number" className="w-100" />
+                    </div>
+                    <div className="m-2" >
+                        <label> Height : </label>
+                        <input type="number" className="w-100" />
+                    </div>
+                    <div className="m-2" >
+                        <label> Opacity : </label>
+                        <input type="number" className="w-100" />
+                    </div>
+                </form>
             </div>
         </div>
     )
