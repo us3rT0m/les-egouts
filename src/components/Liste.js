@@ -1,10 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useRef, useState} from 'react';
+import log from "tailwindcss/lib/util/log";
+import Preview from "./Preview";
 
 
 const Liste = (props) => {
 
-    const [image, setImage] = useState({preview:'',raw:''});
     const [pictures, setPictures] = useState([]);
+    const [pId, setPId] = useState(1);
     const refInput = useRef();
 
     // useEffect(()=>{
@@ -12,32 +14,49 @@ const Liste = (props) => {
     // }, [])
 
     const handleChange = e => {
-
+        console.log("handle change");
         const file = e.target.files[0];
 
-        
-
         if (e.target.files.length) {
-            setImage({
-                preview: URL.createObjectURL(file),
-                raw: file
-            });
-            props.setUploaded([...props.uploaded, pictures]);
-            console.log(file)  // print file uploaded in console
+            // setImage({
+            //     preview: URL.createObjectURL(file),
+            //     raw: file
+            // });
+            console.log("set uploaded");
+
+            let p = pictures.filter(p => p.id === pId)[0];
+            console.log(p);
+
+            p.file = file;
+            p.name = file.name;
+            console.log(pictures);
+
+            console.log("push uploaed");
+            props.setUploaded(pictures);
+            console.log("set pictures");
+            setPictures(pictures);
+            console.log(pictures);
         }
+
+        setPId(pId +1);
     };
 
     const handleUpload = e => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append("image", image.raw);
+        //formData.append("image", image.raw);
+        console.log("handle upload");
         refInput.current.click();
+        console.log("ref input click");
         const jsonfile = {
+            id: pId,
+            name: "",
             settings: {
                 x: 0, y: 0, width: 64, height: 64
             },
-            file: image
+            file: null
         }
+        console.log("set pictures");
         setPictures([...pictures, jsonfile]);
         console.log(pictures);
     };
@@ -57,37 +76,15 @@ const Liste = (props) => {
 
             <div>
                 <ul>
-                    {props.uploaded.length > 0 && 
-                    props.uploaded.map(
-                        (x,index) => {
-                            return (
-                                <li key={index}>
-                                    <p>{x.name}</p>
-                                    <img src={URL.createObjectURL(x)} width="300" height="300" />
-                                    <div className="border-2 border-black w-72 mt-5">
-                                        <form action="">
-                                            <div className="m-2" >
-                                                <label> X : </label>
-                                                <input type="number" className="w-100" value={x.settings.x} onChange={e => x.settings.x = e.target.value}/>
-                                            </div>
-                                            <div className="m-2" >
-                                                <label> Y : </label>
-                                                <input type="number" className="w-100" value={x.settings.y} onChange={e => x.settings.y = e.target.value} />
-                                            </div>
-                                            <div className="m-2" >
-                                                <label> Width : </label>
-                                                <input type="number" className="w-100" value={x.settings.width} onChange={e => x.settings.width = e.target.value} />
-                                            </div>
-                                            <div className="m-2" >
-                                                <label> Height : </label>
-                                                <input type="number" className="w-100" value={x.settings.height} onChange={e => x.settings.height = e.target.value}/>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </li>
-                            );
-                        }
-                    )}
+                    {pictures.length > 0 &&
+                        pictures.map(
+                            (x,index) => {
+                                return (
+                                   <Preview picture={x} key={index} />
+                                );
+                            }
+                        )
+                    }
                 </ul>
             </div>
         </div>
