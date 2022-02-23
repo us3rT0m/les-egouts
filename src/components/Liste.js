@@ -1,35 +1,43 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, {useRef, useState} from 'react';
+import log from "tailwindcss/lib/util/log";
+import Preview from "./Preview";
 
 
 const Liste = (props) => {
 
-    const [image, setImage] = useState({preview:'',raw:''});
-    const [pictures, setPictures] = useState([]);
+    const [current, setCurrent] = useState();
+    const [pId, setPId] = useState(1);
     const refInput = useRef();
 
-    // useEffect(()=>{
-    //     setImage
-    // }, [])
-
     const handleChange = e => {
+        const file = e.target.files[0];
 
         if (e.target.files.length) {
-            setImage({
-                preview: URL.createObjectURL(e.target.files[0]),
-                raw: e.target.files[0]
-            });
-            props.setUploaded([...props.uploaded, e.target.files[0]]);
-            console.log(e.target.files[0])  // print file uploaded in console
+            current.blob = URL.createObjectURL(file);
+            current.file = file;
+            current.name = file.name;
+
+            props.setUploaded([...props.uploaded, current]);
+            setCurrent(null);
         }
+
+        setPId(pId +1);
     };
 
     const handleUpload = e => {
+        //On empêche le upload
         e.preventDefault();
-        const formData = new FormData();
-        formData.append("image", image.raw);
         refInput.current.click();
-        setPictures([...pictures, image]);
-        console.log(pictures);
+        const jsonfile = {
+            id: pId,
+            name: "",
+            settings: {
+                x: 0, y: 0, width: 64, height: 64
+            },
+            file: null,
+            blob: null
+        }
+        setCurrent(jsonfile);
     };
 
     return (
@@ -47,17 +55,15 @@ const Liste = (props) => {
 
             <div>
                 <ul>
-                    {props.uploaded.length > 0 && 
-                    props.uploaded.map(
-                        (x,index) => {
-                            return (
-                                <li key={index}>
-                                    <p>{x.name}</p>
-                                    <img src={URL.createObjectURL(x)} width="300" height="300" />
-                                </li>
-                            );
-                        }
-                    )}
+                    {props.uploaded.length > 0 &&
+                        props.uploaded.map(
+                            (x,index) => {
+                                return (
+                                   <Preview picture={x} key={index} onUpdate={props.sendUpdate}/>
+                                );
+                            }
+                        )
+                    }
                 </ul>
             </div>
         </div>

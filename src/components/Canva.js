@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export const fileToPicture = async (p) => {
     let v = new Image();
@@ -9,8 +9,6 @@ export const fileToPicture = async (p) => {
     } else if(p instanceof ImageData) {
         return p;
     }
-
-    console.log("return");
 };
 
 function getBase64(file) {
@@ -26,74 +24,56 @@ function getBase64(file) {
 
 const Canva = ({pictures = [], display = true}) => {
 
-    const canvas = document.getElementById("EgoutCanvas");
+    const [loaded, setLoaded] = useState([]);
 
     //Liste des images
     useEffect(() => {
+        console.log("clear des loaded files");
+
+        //On copie la liste des images
+        let copy = [...pictures];
+
+        async function loadPictures(list) {
+
+            let newest = [];
+
+            for (const picture of list) {
+                let image = await fileToPicture(picture.file);
+                if(image) {
+                    newest.push({
+                        i: image,
+                        s: picture.settings
+                    });
+                }
+            }
+
+            setLoaded(newest);
+        }
+
+        loadPictures(copy);
+    }, [pictures]);
+
+    useEffect(() => {
+        const canvas = document.getElementById("EgoutCanvas");
         const context = canvas.getContext("2d");
 
         //Clear du canvas a chaque reload
         context.clearRect(0,0, canvas.clientWidth, canvas.clientHeight);
 
-        //On copie la liste des images
-        let copy = [...pictures];
-        //On filtre les images en fonctionde l'ordre
-        // copy.sort(function (p, pa) {
-        //     return p.order >= pa.order;
-        // });
+        loaded.forEach(l => {
+            setTimeout(() => {
+                const settings = l.s;
+                context.drawImage(l.i, settings.x, settings.y, settings.width, settings.height);
+            }, 200);
+        })
 
-        /*
-        JSON FILE:
-        {
-          settings: {
-            x: 0, y: 0, width: 0, height: 0
-          },
-          file: <file state>
-        }
-         */
-
-        async function loadPictures(p) {
-            for (const picture of copy) {
-                let image = await fileToPicture(picture.file);
-                let settings = picture.settings;
-                context.drawImage(image, settings.x, settings.y, settings.width, settings.height);
-            }
-        }
-
-        loadPictures(copy);
-
-    }, [pictures]);
+    }, [loaded]);
 
     return (
         <div className="flex flex-col w-4/5">
             <h1>Canva</h1>
             <div className="border-2">
                 <canvas style={display?{display:'block'}:{display: 'none'}} id="EgoutCanvas" />
-            </div>
-
-            <div className="border-2 border-black w-72 mt-5">
-                <form action="">
-                    <div className="m-2" >
-                        <label> X : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Y : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Width : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Height : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                    <div className="m-2" >
-                        <label> Opacity : </label>
-                        <input type="number" className="w-100" />
-                    </div>
-                </form>
             </div>
         </div>
     )
