@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 export const fileToPicture = async (p) => {
     let v = new Image();
@@ -8,11 +8,7 @@ export const fileToPicture = async (p) => {
         return v;
     } else if(p instanceof ImageData) {
         return p;
-    } else if(p instanceof Blob) {
-        console.log("blob file to picture");
     }
-
-    console.log("return");
 };
 
 function getBase64(file) {
@@ -28,7 +24,35 @@ function getBase64(file) {
 
 const Canva = ({pictures = [], display = true}) => {
 
+    const [loaded, setLoaded] = useState([]);
+
     //Liste des images
+    useEffect(() => {
+        console.log("clear des loaded files");
+
+        //On copie la liste des images
+        let copy = [...pictures];
+
+        async function loadPictures(list) {
+
+            let newest = [];
+
+            for (const picture of list) {
+                let image = await fileToPicture(picture.file);
+                if(image) {
+                    newest.push({
+                        i: image,
+                        s: picture.settings
+                    });
+                }
+            }
+
+            setLoaded(newest);
+        }
+
+        loadPictures(copy);
+    }, [pictures]);
+
     useEffect(() => {
         const canvas = document.getElementById("EgoutCanvas");
         const context = canvas.getContext("2d");
@@ -36,34 +60,14 @@ const Canva = ({pictures = [], display = true}) => {
         //Clear du canvas a chaque reload
         context.clearRect(0,0, canvas.clientWidth, canvas.clientHeight);
 
-        console.log("canvas");
-        console.log(pictures);
+        loaded.forEach(l => {
+            setTimeout(() => {
+                const settings = l.s;
+                context.drawImage(l.i, settings.x, settings.y, settings.width, settings.height);
+            }, 200);
+        })
 
-        //On copie la liste des images
-        let copy = [...pictures];
-        //On filtre les images en fonctionde l'ordre
-        // copy.sort(function (p, pa) {
-        //     return p.order >= pa.order;
-        // });
-
-        console.log("copy");
-        console.log(copy);
-
-        async function loadPictures(p) {
-            for (const picture of copy) {
-                console.log("rendering image");
-                console.log(picture);
-                let image = await fileToPicture(picture.file);
-                console.log(image);
-                let settings = picture.settings;
-                console.log(settings);
-                context.drawImage(image, settings.x + Math.random() * 15, settings.y, settings.width, settings.height);
-            }
-        }
-
-        loadPictures(copy);
-
-    }, [pictures]);
+    }, [loaded]);
 
     return (
         <div className="flex flex-col w-4/5">

@@ -5,34 +5,18 @@ import Preview from "./Preview";
 
 const Liste = (props) => {
 
-    const [pictures, setPictures] = useState([]);
     const [current, setCurrent] = useState();
     const [pId, setPId] = useState(1);
     const refInput = useRef();
 
-    // useEffect(()=>{
-    //     setImage
-    // }, [])
-
     const handleChange = e => {
-        console.log("handle change called");
         const file = e.target.files[0];
-        console.log("get file from target event");
 
         if (e.target.files.length) {
-            // setImage({
-            //     preview: URL.createObjectURL(file),
-            //     raw: file
-            // });
-            console.log("set current url");
             current.blob = URL.createObjectURL(file);
             current.file = file;
             current.name = file.name;
 
-            console.log("set pictures");
-            setPictures([...pictures, current]);
-            console.log(pictures);
-            console.log("push pictures");
             props.setUploaded([...props.uploaded, current]);
             setCurrent(null);
         }
@@ -43,9 +27,7 @@ const Liste = (props) => {
     const handleUpload = e => {
         //On empêche le upload
         e.preventDefault();
-        console.log("click on ref");
         refInput.current.click();
-        console.log("create jsonfile");
         const jsonfile = {
             id: pId,
             name: "",
@@ -55,8 +37,6 @@ const Liste = (props) => {
             file: null,
             blob: null
         }
-        console.log(jsonfile);
-        console.log("set current");
         setCurrent(jsonfile);
     };
 
@@ -75,11 +55,11 @@ const Liste = (props) => {
 
             <div>
                 <ul>
-                    {pictures.length > 0 &&
-                        pictures.map(
+                    {props.uploaded.length > 0 &&
+                        props.uploaded.map(
                             (x,index) => {
                                 return (
-                                   <Preview picture={x} key={index} />
+                                   <Preview picture={x} key={index} onUpdate={props.sendUpdate}/>
                                 );
                             }
                         )
