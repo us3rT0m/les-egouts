@@ -68,11 +68,12 @@ const Canva = ({pictures = [], display = true}) => {
     }, [loaded]);
 
     return (
-        <div className="flex flex-col w-4/5">
-            <h1>Canva</h1>
-            <div className="border-2">
-                <canvas style={display?{display:'block'}:{display: 'none'}} id="EgoutCanvas" />
+        <div className="flex flex-col w-100 items-center">
+            <h1 className="text-xl">Canva</h1>
+            <div className="flex items-center w-100">
+                <canvas className="border-2 border-black rounded w-100" id="EgoutCanvas" />
             </div>
+            <button className="p-2 bg-green-500 rounded h-10 w-24">Download</button>
         </div>
     )
 }

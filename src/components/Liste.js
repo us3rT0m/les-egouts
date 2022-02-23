@@ -41,7 +41,7 @@ const Liste = (props) => {
     };
 
     return (
-        <div>
+        <div className="flex flex-col items-center">
 
             <input
                 type="file"
@@ -51,10 +51,10 @@ const Liste = (props) => {
                 ref={refInput}
             />
             <br />
-            <button onClick={handleUpload}>Upload</button>
+            <button className="p-2 bg-green-500 rounded w-20 mt-2"onClick={handleUpload}>Upload</button>
 
             <div>
-                <ul>
+                <ul className="flex">
                     {props.uploaded.length > 0 &&
                         props.uploaded.map(
                             (x,index) => {

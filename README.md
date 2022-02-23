@@ -34,6 +34,8 @@ All contributors can participate in the decision making of the project
 * Dorian Jullian (Frontend / Backend)
 * and averyone else who contributed to the project
 
+Please see all the contributors on the **[Contributors page](https://github.com/us3rT0m/les-egouts/graphs/contributors)**
+
 # License 
 
 **Les egouts is open-sourced software [MIT license](./LICENSE)**
