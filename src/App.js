@@ -5,18 +5,14 @@ import React, { useState, useEffect } from 'react';
 
 function App() {
 
-  const listChange = (picture) => {
+    const [uploaded, setUploaded] = useState([]);
 
-  }
-
-  const [uploaded, setUploaded] = useState([]);
-
-  return (
-    <div className="App flex grow justify-around w-100">
-      <Canva pictures={uploaded}/>
-      <Liste uploaded={uploaded} setUploaded={setUploaded} onChangePic={listChange} />
-    </div>
-  );
+    return (
+        <div className="App flex grow justify-around w-100">
+          <Canva pictures={uploaded}/>
+          <Liste uploaded={uploaded} setUploaded={setUploaded} />
+        </div>
+    );
 }
 
 export default App;

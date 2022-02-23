@@ -6,6 +6,7 @@ import Preview from "./Preview";
 const Liste = (props) => {
 
     const [pictures, setPictures] = useState([]);
+    const [current, setCurrent] = useState();
     const [pId, setPId] = useState(1);
     const refInput = useRef();
 
@@ -14,51 +15,49 @@ const Liste = (props) => {
     // }, [])
 
     const handleChange = e => {
-        console.log("handle change");
+        console.log("handle change called");
         const file = e.target.files[0];
+        console.log("get file from target event");
 
         if (e.target.files.length) {
             // setImage({
             //     preview: URL.createObjectURL(file),
             //     raw: file
             // });
-            console.log("set uploaded");
+            console.log("set current url");
+            current.blob = URL.createObjectURL(file);
+            current.file = file;
+            current.name = file.name;
 
-            let p = pictures.filter(p => p.id === pId)[0];
-            console.log(p);
-
-            p.file = file;
-            p.name = file.name;
-            console.log(pictures);
-
-            console.log("push uploaed");
-            props.setUploaded(pictures);
             console.log("set pictures");
-            setPictures(pictures);
+            setPictures([...pictures, current]);
             console.log(pictures);
+            console.log("push pictures");
+            props.setUploaded([...props.uploaded, current]);
+            setCurrent(null);
         }
 
         setPId(pId +1);
     };
 
     const handleUpload = e => {
+        //On empêche le upload
         e.preventDefault();
-        const formData = new FormData();
-        //formData.append("image", image.raw);
-        console.log("handle upload");
+        console.log("click on ref");
         refInput.current.click();
-        console.log("ref input click");
+        console.log("create jsonfile");
         const jsonfile = {
             id: pId,
             name: "",
             settings: {
                 x: 0, y: 0, width: 64, height: 64
             },
-            file: null
+            file: null,
+            blob: null
         }
-        console.log("set pictures");
-        setPictures([...pictures, jsonfile]);
-        console.log(pictures);
+        console.log(jsonfile);
+        console.log("set current");
+        setCurrent(jsonfile);
     };
 
     return (

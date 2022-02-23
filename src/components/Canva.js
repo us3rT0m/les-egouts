@@ -8,6 +8,8 @@ export const fileToPicture = async (p) => {
         return v;
     } else if(p instanceof ImageData) {
         return p;
+    } else if(p instanceof Blob) {
+        console.log("blob file to picture");
     }
 
     console.log("return");
