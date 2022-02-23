@@ -28,8 +28,6 @@ const Canva = ({pictures = [], display = true}) => {
 
     //Liste des images
     useEffect(() => {
-        console.log("clear des loaded files");
-
         //On copie la liste des images
         let copy = [...pictures];
 
