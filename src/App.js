@@ -2,19 +2,20 @@ import './App.css';
 import Liste from './components/Liste';
 import Canva from './components/Canva';
 import React, { useState, useEffect } from 'react';
+import Core from "./core/core-pictures";
 
 function App() {
 
-    const [uploaded, setUploaded] = useState([]);
+    //const [uploaded, setUploaded] = useState([]);
 
     const pictureUpdated = (picture) => {
 
-        const copy = [...uploaded];
+        const copy = [...Core.pictures];
 
         const where = copy.filter(p => p.id === picture.id);
         if(where) {
             where.settings = picture.settings;
-            setUploaded(copy);
+            Core.setUploaded(copy);
         }
 
     }

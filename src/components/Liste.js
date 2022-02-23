@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
 import log from "tailwindcss/lib/util/log";
 import Preview from "./Preview";
+import Core from "../core/core-pictures";
 
 
 const Liste = (props) => {
@@ -13,6 +14,7 @@ const Liste = (props) => {
         const file = e.target.files[0];
 
         if (e.target.files.length) {
+            Core.addPicture(file);
             current.blob = URL.createObjectURL(file);
             current.file = file;
             current.name = file.name;
@@ -28,6 +30,8 @@ const Liste = (props) => {
         //On empêche le upload
         e.preventDefault();
         refInput.current.click();
+        /*
+        Core.prepareTemp();
         const jsonfile = {
             id: pId,
             name: "",
@@ -37,7 +41,7 @@ const Liste = (props) => {
             file: null,
             blob: null
         }
-        setCurrent(jsonfile);
+        setCurrent(jsonfile);*/
     };
 
     return (
