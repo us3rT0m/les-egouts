@@ -4,22 +4,19 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Installation
 
+after fork the project and create new branch, you can safely install nodes modules and run it :
+
 via npm
 
 ```bash
-npm install blablabla/les-egouts
+npm install
 ```
-
-# Available Scripts
 
 In the project directory, you can run:
 
 ```bash
-npm blablbalbla
+npm run start
 ```
-
-<!-- Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser. -->
 
 # Gouvernance
 
