@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import log from "tailwindcss/lib/util/log";
 import Preview from "./Preview";
 import core from "../core/core-pictures";
@@ -29,7 +29,7 @@ const Liste = ({uploaded, setUploaded, onUpdated}) => {
     };
 
     return (
-        <div>
+        <div className="flex flex-col items-center">
 
             <input
                 type="file"
@@ -39,10 +39,10 @@ const Liste = ({uploaded, setUploaded, onUpdated}) => {
                 ref={refInput}
             />
             <br />
-            <button onClick={handleUpload}>Upload</button>
+            <button className="p-2 bg-green-500 rounded w-20 mt-2"onClick={handleUpload}>Upload</button>
 
             <div>
-                <ul>
+                <ul className="flex">
                     {uploaded.length > 0 &&
                         uploaded.map(
                             (p,index) => {
