@@ -1,50 +1,41 @@
-const Core = function() {
+class Core {
 
     /**
      * The list pictures saved into the Core
      * @type {Picture[]}
      */
-    this.pictures = [];
-    /**
-     * The picture temp will be save after image loading
-     * @type {null|Picture}
-     */
-    this.tempPicture = null;
+    pictures = [];
     /**
      * The last id used to store the picture
      * @type {number}
      */
-    this.id = 0;
+    id = 0;
 
-    /**
-     * If the core need an update;
-     * @type {boolean}
-     */
-    this.shouldUpdate = false;
-
-    this.draw = () => {
-
-    }
-
-    this.setUpdate = (newest) => {
-
-    }
+    constructor() {}
 
     /**
      * Add a new picture from an upload type file
      * @param file - File object
      */
-    this.addPicture = async (file) => {
-        console.log("ajout de l'image...");
+    async addPicture(file){
         let p = new Picture(this.id += 1, file);
         await p.build();
+        p.default();
 
         this.pictures.push(p);
-        console.log("file bien ajouté");
-        this.shouldUpdate = true;
+        return p;
     }
 
 
+    updatePicture(picture, x, y, width, height) {
+        if(picture) {
+            console.log("set changes settings");
+            if(x > 0) picture.x = parseInt(x);
+            if(y > 0) picture.y = parseInt(y);
+            if(width > 0) picture.width = parseInt(width);
+            if(height > 0) picture.height = parseInt(height);
+        }
+    }
 }
 
 class Picture {
@@ -53,19 +44,47 @@ class Picture {
     name = ""; //Name of the file
 
     //Positions to draw the image
+    /**
+     *
+     * @type {number}
+     */
     x = 0;
+    /**
+     *
+     * @type {number}
+     */
     y = 0;
 
     //Dimensions will be draw
-    width = 0;
-    height = 0;
+    /**
+     *
+     * @type {number}
+     */
+    width = 64;
+    /**
+     *
+     * @type {number}
+     */
+    height = 64;
 
     //Natural dimensions of the file
     naturalWidth = 0;
     naturalHeight = 0;
 
+    /**
+     * The file of the picture uploaded
+     * @type {File}
+     */
     file = null;
+    /**
+     * The blob uri of the picture file
+     * @type {string}
+     */
     blob = null;
+    /**
+     * The element image data to render into canva or add on html
+     * @type {HTMLImageElement}
+     */
     render = null;
 
     constructor(id, file) {
@@ -78,12 +97,13 @@ class Picture {
      * Build the file into blob and render element div
      */
     async build() {
-        console.log("build render");
         //Return the element image with file compiled
-        this.render = await this.buildRender();
+        this.render = new Image();
+        this.render.src = await this.buildRender();
 
-        console.log("set blob");
         this.blob = URL.createObjectURL(this.file);
+
+        this.default();
     }
 
     buildRender() {
@@ -97,6 +117,13 @@ class Picture {
         });
     }
 
+    default() {
+        this.naturalHeight = this.render.height;
+        this.naturalWidth = this.render.width;
+    }
+
 }
 
-export default Core;
+const core = new Core();
+
+export default core;

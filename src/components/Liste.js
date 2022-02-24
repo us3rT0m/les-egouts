@@ -1,47 +1,31 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import log from "tailwindcss/lib/util/log";
 import Preview from "./Preview";
-import Core from "../core/core-pictures";
+import core from "../core/core-pictures";
 
 
-const Liste = (props) => {
+const Liste = ({uploaded, setUploaded, onUpdated}) => {
 
-    const [current, setCurrent] = useState();
-    const [pId, setPId] = useState(1);
     const refInput = useRef();
 
     const handleChange = e => {
         const file = e.target.files[0];
 
         if (e.target.files.length) {
-            Core.addPicture(file);
-            current.blob = URL.createObjectURL(file);
-            current.file = file;
-            current.name = file.name;
+            //Ajout d'une image dans le core
+            core.addPicture(file)
+                .then((p) => {
+                    //Update des images
+                    setUploaded(core.pictures);
+                });
 
-            props.setUploaded([...props.uploaded, current]);
-            setCurrent(null);
         }
-
-        setPId(pId +1);
     };
 
     const handleUpload = e => {
         //On empêche le upload
         e.preventDefault();
         refInput.current.click();
-        /*
-        Core.prepareTemp();
-        const jsonfile = {
-            id: pId,
-            name: "",
-            settings: {
-                x: 0, y: 0, width: 64, height: 64
-            },
-            file: null,
-            blob: null
-        }
-        setCurrent(jsonfile);*/
     };
 
     return (
@@ -59,11 +43,11 @@ const Liste = (props) => {
 
             <div>
                 <ul>
-                    {props.uploaded.length > 0 &&
-                        props.uploaded.map(
-                            (x,index) => {
+                    {uploaded.length > 0 &&
+                        uploaded.map(
+                            (p,index) => {
                                 return (
-                                   <Preview picture={x} key={index} onUpdate={props.sendUpdate}/>
+                                   <Preview picture={p} key={index} onUpdated={onUpdated}/>
                                 );
                             }
                         )

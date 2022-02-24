@@ -1,23 +1,20 @@
-import React, { useEffect, useState} from "react";
+import React, { useState} from "react";
+import core from "../core/core-pictures";
 
-function Preview({ picture, onUpdate }) {
 
-    const [x, setX] = useState(0);
-    const [y, setY] = useState(0);
-    const [width, setW] = useState(64);
-    const [height, setH] = useState(64);
+function Preview({ picture, onUpdated }) {
 
-    useEffect(() => {
-        picture.settings = {
-            x: x,
-            y: y,
-            width: width,
-            height: height
-        }
+    const [x, setX] = useState(picture.x);
+    const [y, setY] = useState(picture.y);
+    const [width, setW] = useState(picture.width);
+    const [height, setH] = useState(picture.height);
 
-        onUpdate(picture);
-
-    }, [x,y, width,height]);
+    const onChange = () => {
+        console.log("update picture");
+        core.updatePicture(picture, x, y, width, height);
+        console.log("send update");
+        onUpdated(core.pictures);
+    }
 
     return (
         <li>
@@ -27,19 +24,31 @@ function Preview({ picture, onUpdate }) {
                 <form action="">
                     <div className="m-2" >
                         <label> X : </label>
-                        <input type="number" className="w-100" value={x}  onChange={e => setX(e.target.value)}/>
+                        <input type="number" className="w-100" value={x}  onChange={e => {
+                            setX(e.target.value);
+                            onChange();
+                        }}/>
                     </div>
                     <div className="m-2" >
                         <label> Y : </label>
-                        <input type="number" className="w-100" value={y} onChange={e => setY(e.target.value)} />
+                        <input type="number" className="w-100" value={y} onChange={e => {
+                            setY(e.target.value);
+                            onChange();
+                        }} />
                     </div>
                     <div className="m-2" >
                         <label> Width : </label>
-                        <input type="number" className="w-100" value={width} onChange={e => setW(e.target.value)} />
+                        <input type="number" className="w-100" value={width} onChange={e => {
+                            setW(e.target.value);
+                            onChange();
+                        }} />
                     </div>
                     <div className="m-2" >
                         <label> Height : </label>
-                        <input type="number" className="w-100" value={height} onChange={e => setH(e.target.value)}/>
+                        <input type="number" className="w-100" value={height} onChange={e => {
+                            setH(e.target.value);
+                            onChange();
+                        }}/>
                     </div>
                 </form>
             </div>
