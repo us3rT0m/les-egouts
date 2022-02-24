@@ -8,7 +8,6 @@ function App() {
     const [pictures, setPictures] = useState([]);
 
     const onUploaded = (pcs) => {
-        console.log("update state pictures");
         setPictures([...pcs]);
     }
 

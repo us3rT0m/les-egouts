@@ -10,9 +10,7 @@ function Preview({ picture, onUpdated }) {
     const [height, setH] = useState(picture.height);
 
     const onChange = () => {
-        console.log("update picture");
         core.updatePicture(picture, x, y, width, height);
-        console.log("send update");
         onUpdated(core.pictures);
     }
 

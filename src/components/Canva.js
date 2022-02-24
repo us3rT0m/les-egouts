@@ -1,4 +1,5 @@
 import React, {useEffect, useRef} from 'react';
+import core from "../core/core-pictures";
 
 const Canva = ({pictures = [], display = true}) => {
 
@@ -6,27 +7,11 @@ const Canva = ({pictures = [], display = true}) => {
     const downloadRef = useRef(null);
 
     useEffect(() => {
-        const canvas = canvaRef.current;
-        const context = canvas.getContext("2d");
-
-        console.log("clear rect");
-
-        //Clear du canvas a chaque reload
-        context.clearRect(0,0, canvas.clientWidth, canvas.clientHeight);
-
-        pictures.forEach(l => {
-            console.log("je dessine")
-            console.log(l);
-            console.log(l.render);
-            //Faire les calculs ici
-            context.drawImage(l.render, l.x, l.y, l.width, l.height);
-        });
-
+        core.draw(canvaRef.current, pictures);
     }, [pictures]);
 
     const download = () => {
         const dt = canvaRef.current.toDataURL('image/png');
-        console.log(dt);
         downloadRef.current.href = dt;
     }
 

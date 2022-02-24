@@ -36,6 +36,20 @@ class Core {
             if(height > 0) picture.height = parseInt(height);
         }
     }
+
+    draw(canvas, pcs = undefined) {
+        if(!pcs)
+            pcs = this.pictures;
+
+        const context = canvas.getContext("2d");
+
+        //Clear du canvas a chaque reload
+        context.clearRect(0,0, canvas.clientWidth, canvas.clientHeight);
+
+        pcs.forEach(l => {
+            context.drawImage(l.render, l.x, l.y, l.width, l.height);
+        });
+    }
 }
 
 class Picture {
