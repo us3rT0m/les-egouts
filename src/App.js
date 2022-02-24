@@ -1,29 +1,22 @@
 import './App.css';
 import Liste from './components/Liste';
 import Canva from './components/Canva';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function App() {
 
-    const [uploaded, setUploaded] = useState([]);
+    const [pictures, setPictures] = useState([]);
 
-    const pictureUpdated = (picture) => {
-
-        const copy = [...uploaded];
-
-        const where = copy.filter(p => p.id === picture.id);
-        if(where) {
-            where.settings = picture.settings;
-            setUploaded(copy);
-        }
-
+    const onUploaded = (pcs) => {
+        console.log("update state pictures");
+        setPictures([...pcs]);
     }
 
     return (
         <div className="App flex flex-col grow justify-around w-100">
-          <Canva pictures={uploaded}/>
+          <Canva pictures={pictures}/>
           <hr />
-          <Liste uploaded={uploaded} setUploaded={setUploaded} sendUpdate={pictureUpdated} />
+          <Liste uploaded={pictures} setUploaded={onUploaded} onUpdated={onUploaded} />
         </div>
     );
 }
