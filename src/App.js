@@ -20,8 +20,9 @@ function App() {
     }
 
     return (
-        <div className="App flex grow justify-around w-100">
+        <div className="App flex flex-col grow justify-around w-100">
           <Canva pictures={uploaded}/>
+          <hr />
           <Liste uploaded={uploaded} setUploaded={setUploaded} sendUpdate={pictureUpdated} />
         </div>
     );

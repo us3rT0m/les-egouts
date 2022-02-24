@@ -20,11 +20,12 @@ function Preview({ picture, onUpdate }) {
     }, [x,y, width,height]);
 
     return (
-        <li>
+        <li className="flex flex-col items-center ml-2 mr-2">
             <p>{picture.name}</p>
             <img src={picture.blob} width="300" height="300"  alt="Image"/>
-            <div className="border-2 border-black w-72 mt-5">
-                <form action="">
+            <div className="border-2 border-black w-72 mt-5 rounded">
+                <h2 className="text-center">Modifier l'image</h2>
+                <form action="" className="flex flex-col w-100 items-center">
                     <div className="m-2" >
                         <label> X : </label>
                         <input type="number" className="w-100" value={x}  onChange={e => setX(e.target.value)}/>
