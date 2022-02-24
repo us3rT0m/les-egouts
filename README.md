@@ -22,48 +22,50 @@ npm run start
 
 ## Dessiner les images
 
-1. Dans votre composant parent, créer une State
+1. In your parent component, create a State
 ```const [pictures, setPictures] = useState([]);```
-2. Créer un nouveau composant qui affichera votre canvas, attribuer lui une reférence ``useRef`` et créer un bouton avec une nouvelle reférence, qui permettra de télécharger votre image compilé.
-   1. Ajouter en props 'pictures' qui recevra les images du parent.
-   2. Ajouter un effet ``useEffect`` qui s'actualisera sur la props des pictures.
-   3. Appeler ```core.draw(canvasRef.current, <pictures>)``` dans votre effet pour l'afficher sur votre canvas.
+2. Create a new component that will display your canvas, assign it a ``useRef`` reference and create a button with a new reference, which will download your compiled image.
+   1. Add in 'pictures' props which will receive the parent's pictures.
+   2. Add a ``useEffect`` that will update on the pictures props.
+   3. Call ``core.draw(canvasRef.current, <pictures>)`` in your effect to display it on your canvas.
 
-## Ajouter une image
+## Add an image
 
-1. Pour ajouter une image, vous devez appeler ```core.addPicture(file)``` qui retourne une Promise avec pour objet une classe Picture.
-2. Faites vos actions dans le retour de la Promise, comme remonter l'infos au composant parent.
+1. To add a picture, you need to call ``core.addPicture(file)`` which returns a Promise with a Picture class object.
+2. Do your actions in the Promise return, such as forwarding the info to the parent component.
 
-## Modifier les propriétés de l'image
+## Edit the image properties
 
 1. Vous pouvez modifier les propriétés d'une image avec ```core.updatePicture(x,y,width,height)```
 2. Remontez l'infos au parent pour mettra à jour React avec les states.
 
-## Télécharger l'image
+## Download image
 
-1. Définissez un bouton de téléchargement avec une propriété ``download="nomfichier.png"``
-2. Récupérer la réfèrence de votre canvas et convertissez la en image puis appliquer la destination sur votre bouton.
+1. Set a download button with a``download="nomfichier.png"``
+2. Get the reference of your canvas and convert it to an image then apply the destination to your button.
 ``const dt = canvaRef.current.toDataURL('image/png');
    downloadRef.current.href = dt;``
 
 ## Exemple
 
-Vous pouvez regarder le projet ci-dessus pour comprendre le fonctionnement du package avec React.
+You can look at the project above to understand how the package works with React.
 
 # Picture Data
 
-Un objet picture contient les valeurs :
-- id : L'id de l'image
-- name : Le nom du fichier
-- x : Position X dessiné dans le canvas
-- y : Position Y dessiné dans le canvas
-- width : Largeur dessiné dans le canvas (64 par défaut)
-- height: Hauteur dessiné dans le canvas (64 par défaut)
-- naturalWidth : Largeur de l'image
-- naturalHeight : Hauteur de l'image
-- blob : Le fichier sous format blob
-- file : Le fichier upload
-- render : La balise image avec l'image compilé en source. (ImageData/HTMLImage)
+
+A picture object contains the values :
+- id: The id of the picture
+- name : The name of the file
+- x : X position drawn in the canvas
+- y : Y position drawn in the canvas
+- width : Width drawn in the canvas (64 by default)
+- height: Height drawn in the canvas (64 by default)
+- naturalWidth : Width of the image
+- naturalHeight : Height of the image
+- blob : The file in blob format
+- file : The upload file
+- render : The image tag with the compiled image as source. (ImageData/HTMLImage)
+
 
 # Gouvernance
 
