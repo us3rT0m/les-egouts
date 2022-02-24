@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 # Installation
 
-after fork the project and create new branch, you can safely install nodes modules and run it :
+clone the project and create new branch, you can safely install nodes modules and run it :
 
 via npm
 
