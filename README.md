@@ -36,8 +36,8 @@ npm run start
 
 ## Edit the image properties
 
-1. Vous pouvez modifier les propriétés d'une image avec ```core.updatePicture(x,y,width,height)```
-2. Remontez l'infos au parent pour mettra à jour React avec les states.
+1. You can change the properties of an image with ```core.updatePicture(x,y,width,height)```
+2. Feed the info back to the parent to update React with the states.
 
 ## Download image
 
