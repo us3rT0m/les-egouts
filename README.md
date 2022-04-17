@@ -75,7 +75,7 @@ All contributors can participate in the decision making of the project
 ## **"Les égouts"**  `Belongs To`
 
 * Julien Coudert (Documentation / Ui / Frontend)
-* Omar Aboulbarge (Documentation)
+* Omar Aboulbarge (Documentation/Frontend)
 * Tom Ait-ouarab (Frontend / UX)
 * Dorian Jullian (Frontend / Backend)
 * and averyone else who contributed to the project
